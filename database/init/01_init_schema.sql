@@ -12,9 +12,20 @@ BEGIN
     END IF;
 END $$;
 
+-- Drop existing sequence if exists
+DROP SEQUENCE IF EXISTS transdemo_id_seq;
+
+-- Create sequence with proper minimum value
+CREATE SEQUENCE transdemo_id_seq
+    START WITH 100000000001
+    INCREMENT BY 1
+    MINVALUE 100000000001
+    NO MAXVALUE
+    CACHE 1;
+
 -- Create transdemo table
 CREATE TABLE IF NOT EXISTS transdemo (
-    id BIGSERIAL PRIMARY KEY CHECK (id >= 100000000001),
+    id BIGINT DEFAULT nextval('transdemo_id_seq') PRIMARY KEY CHECK (id >= 100000000001),
     tx_date TIMESTAMP WITH TIME ZONE DEFAULT (CURRENT_TIMESTAMP AT TIME ZONE 'America/New_York'),
     tx_type transaction_type NOT NULL,
     payment JSONB NOT NULL,
@@ -22,8 +33,8 @@ CREATE TABLE IF NOT EXISTS transdemo (
     status transaction_status NOT NULL DEFAULT 'pending'
 );
 
--- Set the sequence to start from 100000000001
-ALTER SEQUENCE transdemo_id_seq RESTART WITH 100000000001;
+-- Set sequence ownership
+ALTER SEQUENCE transdemo_id_seq OWNED BY transdemo.id;
 
 -- Create index on status for faster queries
 CREATE INDEX IF NOT EXISTS idx_transdemo_status ON transdemo(status);
