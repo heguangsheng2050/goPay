@@ -49,6 +49,28 @@ docker-compose down
 
 ## Testing the Database
 
+There are multiple ways to test the database:
+
+### 1. Using the Test Script
+
+The easiest way to run tests is using the provided shell script:
+
+```bash
+# Make the script executable
+chmod +x database/scripts/run_tests.sh
+
+# Run the tests
+./database/scripts/run_tests.sh
+```
+
+This script will:
+- Insert test transactions
+- Run verification queries
+- Show transaction statistics
+- Display results in a formatted way
+
+### 2. Manual Testing with SQL File
+
 A comprehensive set of test queries is provided in `scripts/test_queries.sql`. These queries test:
 
 1. Enum Types Verification
@@ -61,16 +83,26 @@ A comprehensive set of test queries is provided in `scripts/test_queries.sql`. T
 8. Customer Transaction History
 9. Transaction Statistics with Time Zones
 
-### Running Tests
+To run these queries:
 
-1. Connect to the database:
 ```bash
-docker-compose exec postgres psql -U gopay_admin -d payDemo
+# Option 1: Using psql from host machine
+PGPASSWORD=gP@y2024S3cur3! psql -h localhost -p 5432 -U gopay_admin -d payDemo -f database/scripts/test_queries.sql
+
+# Option 2: Using Docker container
+docker compose exec -T postgres psql -U gopay_admin -d payDemo -f /scripts/test_queries.sql
 ```
 
-2. Run the test queries:
-```sql
-\i /scripts/test_queries.sql
+### 3. Interactive Testing
+
+For interactive testing, connect to the database:
+
+```bash
+# Option 1: Using psql from host machine
+PGPASSWORD=gP@y2024S3cur3! psql -h localhost -p 5432 -U gopay_admin -d payDemo
+
+# Option 2: Using Docker container
+docker compose exec postgres psql -U gopay_admin -d payDemo
 ```
 
 ### Sample Queries
