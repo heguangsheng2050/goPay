@@ -11,7 +11,18 @@ echo -e "${GREEN}Starting database tests...${NC}"
 run_query() {
     echo -e "\n${GREEN}Running: $1${NC}"
     PGPASSWORD=gP@y2024S3cur3! psql -h localhost -p 5432 -U gopay_admin -d payDemo -c "$1"
+    if [ $? -ne 0 ]; then
+        echo -e "${RED}Query failed. Checking sequence...${NC}"
+        run_query "SELECT last_value FROM transdemo_id_seq;"
+        run_query "ALTER SEQUENCE transdemo_id_seq RESTART WITH 100000000001;"
+        echo -e "${GREEN}Retrying original query...${NC}"
+        PGPASSWORD=gP@y2024S3cur3! psql -h localhost -p 5432 -U gopay_admin -d payDemo -c "$1"
+    fi
 }
+
+# Ensure sequence is set correctly
+echo -e "\n${GREEN}Verifying sequence...${NC}"
+run_query "ALTER SEQUENCE transdemo_id_seq RESTART WITH 100000000001;"
 
 # Insert test data
 echo -e "\n${GREEN}Inserting test transactions...${NC}"

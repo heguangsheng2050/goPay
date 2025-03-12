@@ -22,6 +22,9 @@ CREATE TABLE IF NOT EXISTS transdemo (
     status transaction_status NOT NULL DEFAULT 'pending'
 );
 
+-- Set the sequence to start from 100000000001
+ALTER SEQUENCE transdemo_id_seq RESTART WITH 100000000001;
+
 -- Create index on status for faster queries
 CREATE INDEX IF NOT EXISTS idx_transdemo_status ON transdemo(status);
 CREATE INDEX IF NOT EXISTS idx_transdemo_tx_date ON transdemo(tx_date);
