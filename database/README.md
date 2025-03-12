@@ -47,15 +47,57 @@ docker-compose exec postgres psql -U gopay_admin -d payDemo
 docker-compose down
 ```
 
-## Testing Queries
+## Testing the Database
+
+A comprehensive set of test queries is provided in `scripts/test_queries.sql`. These queries test:
+
+1. Enum Types Verification
+2. Table Structure
+3. Transaction Querying
+4. Data Insertion (SALE and REFUND examples)
+5. Transaction Type Statistics
+6. Status Aggregation
+7. Pending Transaction Search
+8. Customer Transaction History
+9. Transaction Statistics with Time Zones
+
+### Running Tests
+
+1. Connect to the database:
+```bash
+docker-compose exec postgres psql -U gopay_admin -d payDemo
+```
+
+2. Run the test queries:
+```sql
+\i /scripts/test_queries.sql
+```
+
+### Sample Queries
 
 ```sql
--- Check all transactions
-SELECT * FROM transdemo;
+-- Check enum types
+SELECT typname, enumlabel 
+FROM pg_enum e 
+JOIN pg_type t ON e.enumtypid = t.oid
+WHERE typname IN ('transaction_type', 'transaction_status');
 
--- Check specific transaction types
-SELECT * FROM transdemo WHERE tx_type = 'SALE';
+-- Query transactions with payment details
+SELECT 
+    id,
+    tx_date AT TIME ZONE 'America/New_York' as eastern_time,
+    tx_type,
+    payment->>'payment_type' as payment_type,
+    payment->>'masked_payment' as card_number,
+    status
+FROM transdemo;
 
--- Check transaction status
-SELECT status, COUNT(*) FROM transdemo GROUP BY status;
+-- Get transaction statistics
+SELECT 
+    tx_type,
+    status,
+    COUNT(*) as count
+FROM transdemo 
+GROUP BY tx_type, status
+ORDER BY tx_type, status;
 ```
