@@ -22,6 +22,9 @@ CREATE TABLE IF NOT EXISTS transdemo (
     status transaction_status NOT NULL DEFAULT 'pending'
 );
 
+-- Set the sequence to start from 100000000001
+ALTER SEQUENCE transdemo_id_seq RESTART WITH 100000000001;
+
 -- Create index on status for faster queries
 CREATE INDEX IF NOT EXISTS idx_transdemo_status ON transdemo(status);
 CREATE INDEX IF NOT EXISTS idx_transdemo_tx_date ON transdemo(tx_date);
@@ -90,4 +93,46 @@ INSERT INTO transdemo (tx_type, payment, payer, status) VALUES
         "email": "robert.j@example.com"
     }',
     'successful'
+),
+(
+    'SALE',
+    '{
+        "payment_type": "Credit Card",
+        "masked_payment": "************4567",
+        "encrypted_payment": null,
+        "cvv": "789",
+        "expiration_date": "09/25"
+    }',
+    '{
+        "firstName": "Alice",
+        "lastName": "Brown",
+        "address1": "321 Pine St",
+        "city": "San Francisco",
+        "state": "CA",
+        "zipcode": "94101",
+        "phone": "415-555-4567",
+        "email": "alice.b@example.com"
+    }',
+    'pending'
+),
+(
+    'VOID',
+    '{
+        "payment_type": "Credit Card",
+        "masked_payment": "************7890",
+        "encrypted_payment": null,
+        "cvv": "321",
+        "expiration_date": "06/24"
+    }',
+    '{
+        "firstName": "Michael",
+        "lastName": "Wilson",
+        "address1": "567 Elm St",
+        "city": "Seattle",
+        "state": "WA",
+        "zipcode": "98101",
+        "phone": "206-555-7890",
+        "email": "michael.w@example.com"
+    }',
+    'failed'
 );
