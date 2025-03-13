@@ -3,7 +3,7 @@ DO $$
 BEGIN
     -- Create transaction type enum
     IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'transaction_type') THEN
-        CREATE TYPE transaction_type AS ENUM ('SALE', 'CREDIT', 'REFUND', 'VOID');
+        CREATE TYPE transaction_type AS ENUM ('SALE', 'CREDIT', 'REFUND', 'VOID', 'AUTH', 'CAPTURE');
     END IF;
     
     -- Create transaction status enum
