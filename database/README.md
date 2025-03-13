@@ -17,6 +17,8 @@ This microservice provides the PostgreSQL database for the GoPay project.
    - CREDIT
    - REFUND
    - VOID
+   - AUTH
+   - CAPTURE
 
 2. transaction_status:
    - pending
