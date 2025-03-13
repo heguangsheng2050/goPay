@@ -5,10 +5,14 @@ import {
   Grid,
   Box,
   Alert,
+  Typography,
+  Divider,
+  useTheme,
 } from '@mui/material';
 import axios from 'axios';
 
 const CreditCardForm = () => {
+  const theme = useTheme();
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -73,17 +77,46 @@ const CreditCardForm = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <Grid container spacing={2}>
+      <Grid container spacing={3}>
         {error && (
           <Grid item xs={12}>
-            <Alert severity="error">{error}</Alert>
+            <Alert 
+              severity="error"
+              sx={{
+                borderRadius: 2,
+                backgroundColor: '#ffebee',
+                '& .MuiAlert-icon': {
+                  color: '#d32f2f',
+                },
+              }}
+            >
+              {error}
+            </Alert>
           </Grid>
         )}
         {success && (
           <Grid item xs={12}>
-            <Alert severity="success">{success}</Alert>
+            <Alert 
+              severity="success"
+              sx={{
+                borderRadius: 2,
+                backgroundColor: '#f1f8e9',
+                '& .MuiAlert-icon': {
+                  color: '#2e7d32',
+                },
+              }}
+            >
+              {success}
+            </Alert>
           </Grid>
         )}
+        
+        <Grid item xs={12}>
+          <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
+            Personal Information
+          </Typography>
+        </Grid>
+        
         <Grid item xs={6}>
           <TextField
             required
@@ -92,6 +125,17 @@ const CreditCardForm = () => {
             name="firstName"
             value={formData.firstName}
             onChange={handleChange}
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                backgroundColor: theme.palette.grey[50],
+                '&:hover': {
+                  backgroundColor: theme.palette.grey[100],
+                },
+                '&.Mui-focused': {
+                  backgroundColor: '#fff',
+                },
+              },
+            }}
           />
         </Grid>
         <Grid item xs={6}>
@@ -236,15 +280,153 @@ const CreditCardForm = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Box sx={{ mt: 2 }}>
+          <Divider sx={{ my: 3 }} />
+          <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
+            Payment Details
+          </Typography>
+        </Grid>
+
+        <Grid item xs={12}>
+          <TextField
+            required
+            fullWidth
+            label="Card Number"
+            name="cardNumber"
+            value={formData.cardNumber}
+            onChange={handleChange}
+            inputProps={{ maxLength: 16 }}
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                backgroundColor: theme.palette.grey[50],
+                '&:hover': {
+                  backgroundColor: theme.palette.grey[100],
+                },
+                '&.Mui-focused': {
+                  backgroundColor: '#fff',
+                },
+              },
+            }}
+          />
+        </Grid>
+
+        <Grid item xs={12}>
+          <TextField
+            required
+            fullWidth
+            label="Card Holder Name"
+            name="cardHolder"
+            value={formData.cardHolder}
+            onChange={handleChange}
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                backgroundColor: theme.palette.grey[50],
+                '&:hover': {
+                  backgroundColor: theme.palette.grey[100],
+                },
+                '&.Mui-focused': {
+                  backgroundColor: '#fff',
+                },
+              },
+            }}
+          />
+        </Grid>
+
+        <Grid item xs={6}>
+          <TextField
+            required
+            fullWidth
+            label="Expiry Date"
+            name="expiryDate"
+            placeholder="MM/YY"
+            value={formData.expiryDate}
+            onChange={handleChange}
+            inputProps={{ maxLength: 5 }}
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                backgroundColor: theme.palette.grey[50],
+                '&:hover': {
+                  backgroundColor: theme.palette.grey[100],
+                },
+                '&.Mui-focused': {
+                  backgroundColor: '#fff',
+                },
+              },
+            }}
+          />
+        </Grid>
+
+        <Grid item xs={6}>
+          <TextField
+            required
+            fullWidth
+            label="Security Code"
+            name="cvv"
+            type="password"
+            value={formData.cvv}
+            onChange={handleChange}
+            inputProps={{ maxLength: 4 }}
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                backgroundColor: theme.palette.grey[50],
+                '&:hover': {
+                  backgroundColor: theme.palette.grey[100],
+                },
+                '&.Mui-focused': {
+                  backgroundColor: '#fff',
+                },
+              },
+            }}
+          />
+        </Grid>
+
+        <Grid item xs={12}>
+          <TextField
+            required
+            fullWidth
+            label="Amount"
+            name="amount"
+            type="number"
+            value={formData.amount}
+            onChange={handleChange}
+            InputProps={{
+              startAdornment: '$',
+            }}
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                backgroundColor: theme.palette.grey[50],
+                '&:hover': {
+                  backgroundColor: theme.palette.grey[100],
+                },
+                '&.Mui-focused': {
+                  backgroundColor: '#fff',
+                },
+              },
+            }}
+          />
+        </Grid>
+
+        <Grid item xs={12}>
+          <Box sx={{ mt: 4 }}>
             <Button
               type="submit"
               variant="contained"
               color="primary"
               fullWidth
               size="large"
+              sx={{
+                py: 1.5,
+                fontSize: '1rem',
+                fontWeight: 500,
+                borderRadius: 2,
+                textTransform: 'none',
+                backgroundColor: theme.palette.primary.main,
+                '&:hover': {
+                  backgroundColor: '#333333',
+                },
+                boxShadow: 'none',
+              }}
             >
-              Submit Payment
+              Pay Now
             </Button>
           </Box>
         </Grid>

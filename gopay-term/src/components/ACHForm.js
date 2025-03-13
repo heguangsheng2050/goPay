@@ -5,10 +5,14 @@ import {
   Grid,
   Box,
   Alert,
+  Typography,
+  Divider,
+  useTheme,
 } from '@mui/material';
 import axios from 'axios';
 
 const ACHForm = () => {
+  const theme = useTheme();
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -73,17 +77,46 @@ const ACHForm = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <Grid container spacing={2}>
+      <Grid container spacing={3}>
         {error && (
           <Grid item xs={12}>
-            <Alert severity="error">{error}</Alert>
+            <Alert 
+              severity="error"
+              sx={{
+                borderRadius: 2,
+                backgroundColor: '#ffebee',
+                '& .MuiAlert-icon': {
+                  color: '#d32f2f',
+                },
+              }}
+            >
+              {error}
+            </Alert>
           </Grid>
         )}
         {success && (
           <Grid item xs={12}>
-            <Alert severity="success">{success}</Alert>
+            <Alert 
+              severity="success"
+              sx={{
+                borderRadius: 2,
+                backgroundColor: '#f1f8e9',
+                '& .MuiAlert-icon': {
+                  color: '#2e7d32',
+                },
+              }}
+            >
+              {success}
+            </Alert>
           </Grid>
         )}
+
+        <Grid item xs={12}>
+          <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
+            Personal Information
+          </Typography>
+        </Grid>
+
         <Grid item xs={6}>
           <TextField
             required
@@ -92,6 +125,17 @@ const ACHForm = () => {
             name="firstName"
             value={formData.firstName}
             onChange={handleChange}
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                backgroundColor: theme.palette.grey[50],
+                '&:hover': {
+                  backgroundColor: theme.palette.grey[100],
+                },
+                '&.Mui-focused': {
+                  backgroundColor: '#fff',
+                },
+              },
+            }}
           />
         </Grid>
         <Grid item xs={6}>
@@ -102,6 +146,17 @@ const ACHForm = () => {
             name="lastName"
             value={formData.lastName}
             onChange={handleChange}
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                backgroundColor: theme.palette.grey[50],
+                '&:hover': {
+                  backgroundColor: theme.palette.grey[100],
+                },
+                '&.Mui-focused': {
+                  backgroundColor: '#fff',
+                },
+              },
+            }}
           />
         </Grid>
         <Grid item xs={12}>
@@ -112,6 +167,17 @@ const ACHForm = () => {
             name="address1"
             value={formData.address1}
             onChange={handleChange}
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                backgroundColor: theme.palette.grey[50],
+                '&:hover': {
+                  backgroundColor: theme.palette.grey[100],
+                },
+                '&.Mui-focused': {
+                  backgroundColor: '#fff',
+                },
+              },
+            }}
           />
         </Grid>
         <Grid item xs={12}>
@@ -121,6 +187,17 @@ const ACHForm = () => {
             name="address2"
             value={formData.address2}
             onChange={handleChange}
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                backgroundColor: theme.palette.grey[50],
+                '&:hover': {
+                  backgroundColor: theme.palette.grey[100],
+                },
+                '&.Mui-focused': {
+                  backgroundColor: '#fff',
+                },
+              },
+            }}
           />
         </Grid>
         <Grid item xs={6}>
@@ -131,6 +208,17 @@ const ACHForm = () => {
             name="city"
             value={formData.city}
             onChange={handleChange}
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                backgroundColor: theme.palette.grey[50],
+                '&:hover': {
+                  backgroundColor: theme.palette.grey[100],
+                },
+                '&.Mui-focused': {
+                  backgroundColor: '#fff',
+                },
+              },
+            }}
           />
         </Grid>
         <Grid item xs={3}>
@@ -142,6 +230,17 @@ const ACHForm = () => {
             value={formData.state}
             onChange={handleChange}
             inputProps={{ maxLength: 2 }}
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                backgroundColor: theme.palette.grey[50],
+                '&:hover': {
+                  backgroundColor: theme.palette.grey[100],
+                },
+                '&.Mui-focused': {
+                  backgroundColor: '#fff',
+                },
+              },
+            }}
           />
         </Grid>
         <Grid item xs={3}>
@@ -153,6 +252,17 @@ const ACHForm = () => {
             value={formData.zipCode}
             onChange={handleChange}
             inputProps={{ maxLength: 5 }}
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                backgroundColor: theme.palette.grey[50],
+                '&:hover': {
+                  backgroundColor: theme.palette.grey[100],
+                },
+                '&.Mui-focused': {
+                  backgroundColor: '#fff',
+                },
+              },
+            }}
           />
         </Grid>
         <Grid item xs={6}>
@@ -164,6 +274,17 @@ const ACHForm = () => {
             value={formData.phoneNumber}
             onChange={handleChange}
             inputProps={{ maxLength: 10 }}
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                backgroundColor: theme.palette.grey[50],
+                '&:hover': {
+                  backgroundColor: theme.palette.grey[100],
+                },
+                '&.Mui-focused': {
+                  backgroundColor: '#fff',
+                },
+              },
+            }}
           />
         </Grid>
         <Grid item xs={6}>
@@ -175,6 +296,17 @@ const ACHForm = () => {
             type="email"
             value={formData.email}
             onChange={handleChange}
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                backgroundColor: theme.palette.grey[50],
+                '&:hover': {
+                  backgroundColor: theme.palette.grey[100],
+                },
+                '&.Mui-focused': {
+                  backgroundColor: '#fff',
+                },
+              },
+            }}
           />
         </Grid>
         <Grid item xs={12}>
@@ -234,15 +366,150 @@ const ACHForm = () => {
           />
         </Grid>
         <Grid item xs={12}>
-          <Box sx={{ mt: 2 }}>
+          <Divider sx={{ my: 3 }} />
+          <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
+            Bank Account Details
+          </Typography>
+        </Grid>
+
+        <Grid item xs={12}>
+          <TextField
+            required
+            fullWidth
+            label="Account Holder Name"
+            name="accountHolder"
+            value={formData.accountHolder}
+            onChange={handleChange}
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                backgroundColor: theme.palette.grey[50],
+                '&:hover': {
+                  backgroundColor: theme.palette.grey[100],
+                },
+                '&.Mui-focused': {
+                  backgroundColor: '#fff',
+                },
+              },
+            }}
+          />
+        </Grid>
+
+        <Grid item xs={12}>
+          <TextField
+            required
+            fullWidth
+            label="Bank Name"
+            name="bankName"
+            value={formData.bankName}
+            onChange={handleChange}
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                backgroundColor: theme.palette.grey[50],
+                '&:hover': {
+                  backgroundColor: theme.palette.grey[100],
+                },
+                '&.Mui-focused': {
+                  backgroundColor: '#fff',
+                },
+              },
+            }}
+          />
+        </Grid>
+
+        <Grid item xs={12}>
+          <TextField
+            required
+            fullWidth
+            label="Routing Number"
+            name="routingNumber"
+            value={formData.routingNumber}
+            onChange={handleChange}
+            inputProps={{ maxLength: 9 }}
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                backgroundColor: theme.palette.grey[50],
+                '&:hover': {
+                  backgroundColor: theme.palette.grey[100],
+                },
+                '&.Mui-focused': {
+                  backgroundColor: '#fff',
+                },
+              },
+            }}
+          />
+        </Grid>
+
+        <Grid item xs={12}>
+          <TextField
+            required
+            fullWidth
+            label="Account Number"
+            name="accountNumber"
+            value={formData.accountNumber}
+            onChange={handleChange}
+            type="password"
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                backgroundColor: theme.palette.grey[50],
+                '&:hover': {
+                  backgroundColor: theme.palette.grey[100],
+                },
+                '&.Mui-focused': {
+                  backgroundColor: '#fff',
+                },
+              },
+            }}
+          />
+        </Grid>
+
+        <Grid item xs={12}>
+          <TextField
+            required
+            fullWidth
+            label="Amount"
+            name="amount"
+            type="number"
+            value={formData.amount}
+            onChange={handleChange}
+            InputProps={{
+              startAdornment: '$',
+            }}
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                backgroundColor: theme.palette.grey[50],
+                '&:hover': {
+                  backgroundColor: theme.palette.grey[100],
+                },
+                '&.Mui-focused': {
+                  backgroundColor: '#fff',
+                },
+              },
+            }}
+          />
+        </Grid>
+
+        <Grid item xs={12}>
+          <Box sx={{ mt: 4 }}>
             <Button
               type="submit"
               variant="contained"
               color="primary"
               fullWidth
               size="large"
+              sx={{
+                py: 1.5,
+                fontSize: '1rem',
+                fontWeight: 500,
+                borderRadius: 2,
+                textTransform: 'none',
+                backgroundColor: theme.palette.primary.main,
+                '&:hover': {
+                  backgroundColor: '#333333',
+                },
+                boxShadow: 'none',
+              }}
             >
-              Submit Payment
+              Pay Now
             </Button>
           </Box>
         </Grid>
